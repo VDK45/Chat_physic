@@ -10,7 +10,7 @@ class World(pg.Surface):
     класса World чего-либо. При этом мы добавляем необходимые нам атрибуты и методы, сохраняя
     атрибуты и методы родительского класса.'''
 
-    def __init__(self, width, height, camera, color=[250, 250, 250]):
+    def __init__(self, width, height, camera, color=(0, 250, 0)):
         '''
         Создаем экземпляр надкласса pg.Surface, чтобы получить
         его атрибуты внутри экземпляра класса World, а затем
@@ -79,11 +79,36 @@ class World(pg.Surface):
                 self.shape_being_dragged.body.velocity = 0, 0  # ВАЖНО: ОБНУЛЯЕМ СКОРОСТЬ. Иначе Ду не будет точно следовать за курсором.
 
     def draw_circle(self, mouse_pos, space, r=12, width=1):
+        font = pg.font.SysFont('Arial', 20)
+        textsurface  = font.render('Hello world!', True, (0, 0, 0))
+
         '''
         Функция для рисования окружности около Ду, находящегося под курсором мыши.'''
         query_info = space.point_query_nearest(mouse_pos, 0, pm.ShapeFilter())
+
         if query_info != None:
             if query_info.shape.collision_type == 0:
                 # Перевести координаты pymunk в координаты pygame
                 doo_center = pm.pygame_util.to_pygame(query_info.shape.body.position, self)
-                pg.draw.circle(self, [200, 0, 0], doo_center, r, width)
+                # Рисуем круг
+                # pg.draw.circle(self, (200, 0, 0), doo_center, r, width)
+                # Рисуем квадрат
+                #pg.draw.rect(self, (0, 0, 0), (doo_center[0], doo_center[1], 100, 10))
+
+                self.blit(textsurface, (doo_center[0] - 50, doo_center[1] - 10))
+
+
+
+
+
+
+
+    # def draw_circle(self, mouse_pos, space, r=12, width=1):
+    #     '''
+    #     Функция для рисования окружности около Ду, находящегося под курсором мыши.'''
+    #     query_info = space.point_query_nearest(mouse_pos, 0, pm.ShapeFilter())
+    #     if query_info != None:
+    #         if query_info.shape.collision_type == 0:
+    #             # Перевести координаты pymunk в координаты pygame
+    #             doo_center = pm.pygame_util.to_pygame(query_info.shape.body.position, self)
+    #             pg.draw.circle(self, [200, 0, 0], doo_center, r, width)

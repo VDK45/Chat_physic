@@ -13,10 +13,12 @@ pymunk.pygame_util.positive_y_is_up = False
 
 class Game():
     def __init__(self):
-        self.caption = 'World of Doo'
+        self.caption = 'Chat physic'
         self.fps = 60
         self.camera_width = 400
         self.camera_height = 600
+
+
 
     def game_initialize(self):
         pg.init()
@@ -27,9 +29,13 @@ class Game():
 
         # Добавляем в игру шрифт для вывода на экран различных надписей и подсказок
         font = pg.font.SysFont('Arial', 14)
+        font_2 = pg.font.SysFont('Arial', 20)
+        textsurface = font_2.render('Hello world!', True, (0, 0, 0))
 
         # Добавляем объект World для отображения всей игровой области
         world = World(self.camera_width, self.camera_height, camera)
+
+        world.blit(textsurface, (50, 100))
 
         pm.pygame_util.positive_y_is_up = False
 
@@ -101,7 +107,7 @@ class Game():
 
             # # Проверяем работает, ли удаление Ду:
             # # Выводим в консоли длины массивов
-            print(str(len(space.bodies)) + '    ' + str(len(world.free_doos)))
+            # print(str(len(space.bodies)) + '    ' + str(len(world.free_doos)))
 
             # Перетаскивание схваченного Ду
             mouse_pos = pg.mouse.get_pos()
@@ -112,7 +118,7 @@ class Game():
             # Объекты теперь отображаются на поверхности world
             space.debug_draw(draw_options)
 
-            # Отобразить окружность у выделенного Ду
+            # # Отобразить окружность у выделенного Ду
             world.draw_circle(mouse_pos, space)
 
             # Отобразим world на экране
